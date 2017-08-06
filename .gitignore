@@ -1,1 +1,4 @@
-./*.pyc
+*.pyc
+*.cfg
+guba/output.log
+guba/log
