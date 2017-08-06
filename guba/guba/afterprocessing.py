@@ -67,8 +67,8 @@ for stock in STOCKS_LIST:
 		read_add += int(item["READ"]) - int(read_old)
 		comment_add += int(item["COMMENT"]) - int(comment_old)
 
-	doc = {"ID":item["ID"], "POST_ADD": post_add, "READ_ADD":read_add, "COMMENT_ADD":comment_add, 
-			 "CONTENT_C":content_charactor_count, "COMMENTS_C":comments_charactor_count, "FACE_C":faces_count
+	doc = {"ID":stock, "POST_ADD": post_add, "READ_ADD":read_add, "COMMENT_ADD":comment_add, 
+			 "CONTENT_C":content_charactor_count, "COMMENTS_C":comments_charactor_count, "FACE_C":faces_count,
 			 "TL_XQ_num":0, "TL_XQ_per":0., "TL_GB_num":0., "TL_GB_per":0., "TL_NS_num":0., "TL_NS_sco":0.}
 	col_output.insert_one(doc)
 
