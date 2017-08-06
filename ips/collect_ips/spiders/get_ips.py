@@ -17,7 +17,7 @@ class GetIpsSpider(scrapy.Spider):
         return reqs
         
     def parse(self, response):
-        print("Into parse!")
+        #print("Into parse!")
         selector = Selector(response)
         #ip_list = response.xpath('//table[@id="ip_list"]')
         ip_list = selector.xpath('//table[@id="ip_list"]/tr')
