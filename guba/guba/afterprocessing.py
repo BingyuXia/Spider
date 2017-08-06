@@ -3,7 +3,7 @@ import pymongo
 from stocks_list import STOCKS_LIST
 
 host = "127.0.0.1"
-port = "27017"
+port = 27017
 
 client = pymongo.MongoClient(host, port)
 db_name_1 = "YQ_BASE"
@@ -23,10 +23,11 @@ for stock in STOCKS_LIST:
 	comments_charactor_count = 0
 	faces_count = 0
 	for item in items:
-		show_raw = col_raw.find({"ID":item["ID"], "TITLE":item["TITLE"], "TIME":item["TIME"], 
-			"WRITER":item["WRITER"]}, {"_id":0, "READ":1, "COMMENT":1})
+		raw_querry = {"ID":item["ID"], "TITLE":item["TITLE"], "TIME":item["TIME"], 
+			"WRITER":item["WRITER"]}
+		show_raw = col_raw.find(raw_querry, {"_id":0, "READ":1, "COMMENT":1})
 
-		if show.count() == 0:
+		if show_raw.count() == 0:
 			post_add += 1
 			read_old = 0
 			comment_old =0
@@ -34,10 +35,10 @@ for stock in STOCKS_LIST:
 					"READ":item["READ"], "COMMENT":item["COMMENT"],}
 			col_raw.insert_one(doc)
 		else:
-			post = list(show)[0]
+			post = list(show_raw)[0]
 			read_old = post["READ"]
 			comment_old = post["COMMENT"]
-			show_raw.update_one({'$set' : {"READ" : item["READ"], "COMMENT": item["COMMENT"]}})
+			col_raw.update_one({raw_querry}, {'$set' : {"READ" : item["READ"], "COMMENT": item["COMMENT"]}})
 
 		for i in item["CONTENT"]:
 			content_charactor_count += len(i)
@@ -47,8 +48,8 @@ for stock in STOCKS_LIST:
 		for i in item["FACE"]:
 			faces_count += len(i)
 
-		read_add += item["READ"] - read_old
-		comment_add += item["COMMENT"] - comment_old
+		read_add += int(item["READ"]) - read_old
+		comment_add += int(item["COMMENT"]) - comment_old
 
 		doc = {"ID":item["ID"], "POST_ADD": post_add, "READ_ADD":read_add, "COMMENT_ADD":comment_add, 
 				"CONTENT_C":content_charactor_count, "COMMENTS_C":comments_charactor_count, 
