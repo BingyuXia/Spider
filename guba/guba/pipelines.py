@@ -7,6 +7,7 @@
 #import pymongo
 #from scrapy.conf import settings
 from guba.items import PostItem, PostContentItem
+from guba.settings import *
 
 
 class GubaPipeline(object):
