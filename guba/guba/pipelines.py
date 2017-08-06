@@ -7,15 +7,15 @@
 #import pymongo
 #from scrapy.conf import settings
 from guba.items import PostItem, PostContentItem
-from guba.settings import *
+import guba.settings as settings
 
 
 class GubaPipeline(object):
     def __init__(self):
-        host = settings['MONGODB_HOST']
-        port = settings['MONGODB_PORT']
-        db_name = settings['MONGODB_DBNAME']
-        col_name = settings['MONGODB_COLNAME']
+        host = settings.MONGODB_HOST
+        port = settings.MONGODB_PORT
+        db_name = settings.MONGODB_DBNAME
+        col_name = settings.MONGODB_COLNAME
         client = pymongo.MongoClient(host, port)
         self.col = client[db_name][col_name]
     
