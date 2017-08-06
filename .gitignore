@@ -2,3 +2,5 @@
 *.cfg
 guba/output.log
 guba/log
+guba/guba/__pycache__/pipelines.cpython-36.pyc
+guba/guba/__pycache__/settings.cpython-36.pyc
