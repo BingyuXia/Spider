@@ -22,20 +22,20 @@ for stock in STOCKS_LIST:
 	faces_count = 0
 	for item in items:
 		show_raw = col_raw.find({"ID":item["ID"], "TITLE":item["TITLE"], "TIME":item["TIME"], 
-	        "WRITER":item["WRITER"]}, {"_id":0, "READ":1, "COMMENT":1})
+			"WRITER":item["WRITER"]}, {"_id":0, "READ":1, "COMMENT":1})
 
 		if show.count() == 0:
 			post_add += 1
-		    read_old = 0
-		    comment_old =0
-		    doc = {"ID":item["ID"], "TITLE":item["TITLE"], "TIME":item["TIME"], "WRITER":item["WRITER"],
-		    		"READ":item["READ"], "COMMENT":item["COMMENT"],}
-	    	col_raw.insert_one(doc)
+			read_old = 0
+			comment_old =0
+			doc = {"ID":item["ID"], "TITLE":item["TITLE"], "TIME":item["TIME"], "WRITER":item["WRITER"],
+					"READ":item["READ"], "COMMENT":item["COMMENT"],}
+			col_raw.insert_one(doc)
 		else:
-		    post = list(show)[0]
-		    read_old = post["READ"]
-		    comment_old = post["COMMENT"]
-		    show_raw.update_one({'$set' : {"READ" : item["READ"], "COMMENT": item["COMMENT"]}})
+			post = list(show)[0]
+			read_old = post["READ"]
+			comment_old = post["COMMENT"]
+			show_raw.update_one({'$set' : {"READ" : item["READ"], "COMMENT": item["COMMENT"]}})
 
 		for i in item["CONTENT"]:
 			content_charactor_count += len(i)
@@ -49,8 +49,8 @@ for stock in STOCKS_LIST:
 		comment_add = item["COMMENT"] - comment_old
 
 		doc = {"ID":item["ID"], "POST_ADD": post_add, "READ_ADD":read_add, "COMMENT_ADD":comment_add, 
-			       "CONTENT_C":content_charactor_count, "COMMENTS_C":comments_charactor_count, 
-			       "FACE_C":faces_count}
+				"CONTENT_C":content_charactor_count, "COMMENTS_C":comments_charactor_count, 
+				"FACE_C":faces_count}
 
 		col_output.insert_one(doc)
 
