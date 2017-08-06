@@ -8,7 +8,7 @@
 #from scrapy.conf import settings
 from guba.items import PostItem, PostContentItem
 
-"""
+
 class GubaPipeline(object):
     def __init__(self):
         host = settings['MONGODB_HOST']
@@ -24,7 +24,7 @@ class GubaPipeline(object):
                 doc = {key:item[key] for key in item}
                 self.col.insert_one(doc)
             except:
-                
+                pass
                 
         if isinstance(item, POSTContentItem):
             try:
@@ -68,3 +68,4 @@ class GubaPipeline(object):
 #                  print(item["FACE"])
             except:
                 pass
+"""
