@@ -22,7 +22,7 @@ class GubaSpiderSpider(scrapy.Spider):
         #self.driver=webdriver.Chrome(chromedriver)
         self.page = 10    #主页抓取页数           
         self.page2 = 3   #评论抓取页数
-        self.time = datetime.datetime(2017, 8, 6, 9, 10, 0)   #抓取某时间线之后的内容
+        self.time = datetime.datetime(2017, 8, 5, 18, 0, 0)   #抓取某时间线之后的内容
         self.logger.error("This is a logging test!")
         return
         
@@ -35,7 +35,7 @@ class GubaSpiderSpider(scrapy.Spider):
     def get_underlying_parse(self, response):
         selector = Selector(response)
         m_0 = selector.xpath('//div[@class="ngbggulbody"]/div')
-        underlying_classes = [m_0[0]] #, m_0[2]]
+        underlying_classes = [m_0[2]] #, m_0[2]]
         for underlying_class in underlying_classes:   #市场沪A+深A:1004+2628
             for underlying in underlying_class.xpath('ul/li'):                        #标的
                 underlying_ID =  underlying.xpath('a/text()').re('(\d{6})')[0]           

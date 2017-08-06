@@ -71,7 +71,7 @@ ITEM_PIPELINES = {
 MONGODB_HOST = "127.0.0.1"
 MONGODB_PORT = 27017
 MONGODB_DBNAME = "YQ_BASE"
-MONGODB_COLNAME = "GUBA_TEMP_00"
+MONGODB_COLNAME = "GUBA_D_20170806"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -97,7 +97,7 @@ MONGODB_COLNAME = "GUBA_TEMP_00"
 
 DOWLOADER_MIDDLEWARE = {
 	"guba.middleware.UserAgentMiddleware": 401,
-    "guba.middleware.RandomProxyMiddleware": 402,
+        "guba.middleware.RandomProxyMiddleware": 402,
         }
 
 #LOGGING:
