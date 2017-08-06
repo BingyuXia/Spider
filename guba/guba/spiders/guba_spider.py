@@ -35,9 +35,9 @@ class GubaSpiderSpider(scrapy.Spider):
     def get_underlying_parse(self, response):
         selector = Selector(response)
         m_0 = selector.xpath('//div[@class="ngbggulbody"]/div')
-        underlying_classes = [m_0[0], m_0[2]]
+        underlying_classes = [m_0[0]] #, m_0[2]]
         for underlying_class in underlying_classes:   #市场沪A+深A:1004+2628
-            for underlying in underlying_class.xpath('ul/li')[:1]:                        #标的
+            for underlying in underlying_class.xpath('ul/li'):                        #标的
                 underlying_ID =  underlying.xpath('a/text()').re('(\d{6})')[0]           
                 #print(underlying_ID +" has been searched!")
                 url = underlying.xpath('a/@href').extract()[0]

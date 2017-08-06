@@ -10,14 +10,14 @@ class GetIpsSpider(scrapy.Spider):
     
     def start_requests(self):
         reqs = []
-        for i in range(1,10):
+        for i in range(1,2):
             req = scrapy.Request("http://www.xicidaili.com/nn/%s"%i)
             reqs.append(req)
             
         return reqs
         
     def parse(self, response):
-        print("Into parse!")
+        #print("Into parse!")
         selector = Selector(response)
         #ip_list = response.xpath('//table[@id="ip_list"]')
         ip_list = selector.xpath('//table[@id="ip_list"]/tr')
