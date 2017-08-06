@@ -17,6 +17,8 @@ for stock in STOCKS_LIST:
 	show_d = col_d.find({"ID":stock}, {"_id" : 0}) 
 	items = list(show_d)
 	post_add = 0
+	read_add = 0
+	comment_add = 0
 	content_charactor_count = 0
 	comments_charactor_count = 0
 	faces_count = 0
@@ -45,8 +47,8 @@ for stock in STOCKS_LIST:
 		for i in item["FACE"]:
 			faces_count += len(i)
 
-		read_add = item["READ"] - read_old
-		comment_add = item["COMMENT"] - comment_old
+		read_add += item["READ"] - read_old
+		comment_add += item["COMMENT"] - comment_old
 
 		doc = {"ID":item["ID"], "POST_ADD": post_add, "READ_ADD":read_add, "COMMENT_ADD":comment_add, 
 				"CONTENT_C":content_charactor_count, "COMMENTS_C":comments_charactor_count, 
