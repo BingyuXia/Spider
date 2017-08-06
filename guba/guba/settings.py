@@ -71,7 +71,7 @@ ITEM_PIPELINES = {
 MONGODB_HOST = "127.0.0.1"
 MONGODB_PORT = 27017
 MONGODB_DBNAME = "YQ_BASE"
-MONGODB_COLNAME = "GUBA_TEMP"
+MONGODB_COLNAME = "GUBA_TEMP_00"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

@@ -4,7 +4,7 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#import pymongo
+import pymongo
 #from scrapy.conf import settings
 from guba.items import PostItem, PostContentItem
 import guba.settings as settings
@@ -12,6 +12,7 @@ import guba.settings as settings
 
 class GubaPipeline(object):
     def __init__(self):
+        #host = settings["MONGODB_HOST"]  #format of scrapy.conf.settings 
         host = settings.MONGODB_HOST
         port = settings.MONGODB_PORT
         db_name = settings.MONGODB_DBNAME
@@ -20,14 +21,14 @@ class GubaPipeline(object):
         self.col = client[db_name][col_name]
     
     def process_item(self, item, spider):
-        if isinstance(item, POSTItem):
+        if isinstance(item, PostItem):
             try:
                 doc = {key:item[key] for key in item}
                 self.col.insert_one(doc)
             except:
                 pass
                 
-        if isinstance(item, POSTContentItem):
+        if isinstance(item, PostContentItem):
             try:
                 doc = {"CONTENT" : item["CONTENT"],
                        "COMMENTS": item["COMMENT"],
@@ -42,7 +43,6 @@ class GubaPipeline(object):
                 pass
                 
                 
-        self.data_one.insert(item)
         return item
 """
 class GubaPipeline(object):
