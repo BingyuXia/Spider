@@ -1,4 +1,7 @@
 import pickle
+import pymongo
+
+
 
 show = self.col.find({"ID":item["ID"], "TITLE":item["TITLE"], "TIME":item["TIME"], \
     "WRITER":item["WRITER"]}, {"_id":0, "READ":1, "COMMENT":1})

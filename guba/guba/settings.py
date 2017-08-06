@@ -95,9 +95,10 @@ MONGODB_COLNAME = "GUBA_TEMP_00"
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 
-#DOWLOADER_MIDDLEWARE = {
-#        
-#        }
+DOWLOADER_MIDDLEWARE = {
+	"guba.middleware.UserAgentMiddleware": 401,
+    "guba.middleware.RandomProxyMiddleware": 402,
+        }
 
 #LOGGING:
 LOG_FILE = "output.log"
