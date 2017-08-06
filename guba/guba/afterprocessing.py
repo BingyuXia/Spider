@@ -1,6 +1,6 @@
 import pickle
 import pymongo
-from stocks_list import STOCKS_LIST
+from stocks_list import get_stocks_list 
 
 host = "127.0.0.1"
 port = 27017
@@ -12,7 +12,9 @@ col_raw = client[db_name_1]["GUBA_RAW"]
 col_d = client[db_name_1]["GUBA_D_20170806"]
 col_output = client[db_name_2]["OUTPUT_20170806"]
 
-
+STOCKS_LIST = get_stocks_list()
+doc = {"ID": '000000', "TITLE":"THIS IS THE FRIST PIECE OF DATA","READ":1,}
+col_raw.insert_one(doc)
 for stock in STOCKS_LIST:
 	show_d = col_d.find({"ID":stock}, {"_id" : 0}) 
 	items = list(show_d)
