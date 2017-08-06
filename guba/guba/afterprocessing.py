@@ -41,13 +41,26 @@ for stock in STOCKS_LIST:
 			comment_old = post["COMMENT"]
 			col_raw.update_one(raw_querry, {'$set' : {"READ" : item["READ"], "COMMENT": item["COMMENT"]}})
 
-		for i in item["CONTENT"]:
-			content_charactor_count += len(i)
-		for i in item["COMMENTS"]:
-			for j in i:
-				comments_charactor_count += len(j)
-		for i in item["FACE"]:
-			faces_count += len(i)
+		try:
+			for i in item["CONTENT"]:
+				content_charactor_count += len(i)
+		except:
+			pass
+			
+		try:
+			for i in item["COMMENTS"]:
+				for j in i:
+					comments_charactor_count += len(j)
+		except:
+			pass
+
+		try:
+			for i in item["FACE"]:
+				faces_count += len(i)
+		except:
+			pass
+
+
 
 		read_add += int(item["READ"]) - int(read_old)
 		comment_add += int(item["COMMENT"]) - int(comment_old)
