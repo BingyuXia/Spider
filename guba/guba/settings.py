@@ -98,3 +98,7 @@ MONGODB_COLNAME = "TEMP"
 #DOWLOADER_MIDDLEWARE = {
 #        
 #        }
+
+#LOGGING:
+LOG_FILE = "log"
+LOG_LEVEL = 'WARNING' 

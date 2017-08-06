@@ -3,11 +3,12 @@
 import scrapy
 import re
 import datetime
+import logging
 from scrapy.selector import Selector
 from guba.items import PostItem, PostContentItem
 #from selenium import webdriver
 
-
+logger = logging.getLogger(__name__)
 
 
 class GubaSpiderSpider(scrapy.Spider):
@@ -19,9 +20,10 @@ class GubaSpiderSpider(scrapy.Spider):
 
     def __init__(self):
         #self.driver=webdriver.Chrome(chromedriver)
-        self.page = 10    #主页抓取页数
+        self.page = 10    #主页抓取页数           
         self.page2 = 3   #评论抓取页数
-        self.time = datetime.datetime(2017, 8, 4, 22, 10, 0)   #抓取某时间线之后的内容
+        self.time = datetime.datetime(2017, 8, 6, 9, 10, 0)   #抓取某时间线之后的内容
+        self.logger.error("This is a logging test!")
         return
         
     def start_requests(self):
@@ -32,13 +34,10 @@ class GubaSpiderSpider(scrapy.Spider):
 
     def get_underlying_parse(self, response):
         selector = Selector(response)
-        count = 0
         m_0 = selector.xpath('//div[@class="ngbggulbody"]/div')
         underlying_classes = [m_0[0], m_0[2]]
         for underlying_class in underlying_classes:   #市场沪A+深A:1004+2628
-            for underlying in underlying_class.xpath('ul/li'):
-                count += 1
-                continue                          #标的
+            for underlying in underlying_class.xpath('ul/li')[:1]:                        #标的
                 underlying_ID =  underlying.xpath('a/text()').re('(\d{6})')[0]           
                 #print(underlying_ID +" has been searched!")
                 url = underlying.xpath('a/@href').extract()[0]
@@ -48,11 +47,10 @@ class GubaSpiderSpider(scrapy.Spider):
                                     meta={'ID':underlying_ID},
                                     dont_filter=True,
                                     )
-            print("NUM: %d" %count)
         return
     
     def get_post_parse(self, response):
-        print("open post successfully:" , response.meta['ID'])
+        self.logger.warning("open %s successfully!" , response.meta['ID'])
         selector = Selector(response)
         #self.driver.get(response.url)
         postslist = selector.xpath('//*[@id="articlelistnew"]/div')
@@ -60,7 +58,7 @@ class GubaSpiderSpider(scrapy.Spider):
         
 
         for post in postslist:                            
-            #One_page
+            #One/_page
             if post.xpath('span[3]/em/text()') != []:              #过滤掉第一页开头帖子
                 continue
             
@@ -79,13 +77,13 @@ class GubaSpiderSpider(scrapy.Spider):
                 post_item['URL'] = post_url
                 post_item['WRITER'] = post.xpath('span[4]/a/text()').extract_first()
                 post_item['TIME'] = post.xpath('span[5]/text()').extract_first()
-                #yield post_item
+                yield post_item
                 yield scrapy.Request(url = post_url,
                                      callback = self.get_post_parse2,
                                      meta={'TITLE':post_item['TITLE'], 'ID':post_item['ID'], 'TIME':post_item['TIME']},
                                      dont_filter = True,
                                      )
-#                break
+
             #Next_page
             elif post.xpath("@class").extract()[0] == "pager":
                 #this_page = post.xpath('span/span/a[@class="on"]/text()').extract_first()
@@ -117,9 +115,8 @@ class GubaSpiderSpider(scrapy.Spider):
         contents['TITLE'] = response.meta['TITLE']
         contents['ID'] = response.meta['ID']
         contents['TIME'] = response.meta['TIME']
-        print(response)
+        
         #Contents       
-        print(response.url)
         if selector.xpath('//*[@id="zwconbody"]/div/div')==[]:
             content = selector.xpath('//*[@id="zwconbody"]/div/text()').extract()
             contents["CONTENT"] = [c.strip() for c in content]
@@ -140,7 +137,6 @@ class GubaSpiderSpider(scrapy.Spider):
         comments_responses = selector.xpath('//*[@id="zwlist"]/div')
         if comments_responses == []:
             contents['COMMENT'] = []
-            print("No comments")
         else:
             for com_ind in comments_responses:
                 id_data = com_ind.xpath('@class').extract_first()
@@ -154,11 +150,10 @@ class GubaSpiderSpider(scrapy.Spider):
                         face_ret = com_ind.xpath('div[3]/div/div[@class="zwlitext stockcodec"]/img')
                         face = [i.xpath('@title').extract_first() for i in face_ret]
                         #[@class="zwlitext stockcodec"]
-                        if len(comments) == 0:
-                            print("The first comment")
-                        elif comment == comments[-1] and times[-1] == times[-2]:
-                            times.pop()
-                            break
+                        if len(comments) >0:
+                            if comment == comments[-1] and times[-1] == times[-2]:
+                                times.pop()
+                                break
                         comments.append(comment)
                         faces.append(face)
                     else:

@@ -7,6 +7,7 @@
 #import pymongo
 #from scrapy.conf import settings
 from guba.items import PostItem, PostContentItem
+
 """
 class GubaPipeline(object):
     def __init__(self):
@@ -23,7 +24,7 @@ class GubaPipeline(object):
                 doc = {key:item[key] for key in item}
                 self.col.insert_one(doc)
             except:
-                pass
+                
                 
         if isinstance(item, POSTContentItem):
             try:
@@ -50,19 +51,20 @@ class GubaPipeline(object):
         if isinstance(item, PostItem):
             try:
                 print(item["TITLE"])
-                print(item["READ"])
-                print(item["COMMENT"])
-                print(item["TIME"])
-                print(item["WRITER"])
+                # print(item["READ"])
+                # print(item["COMMENT"])
+                # print(item["TIME"])
+                # print(item["WRITER"])
             except:
                 pass
         if isinstance(item, PostContentItem):
             try:
-                print(item["TITLE"])
-                print(item["CONTENT"])
-#                print(item["TIME"])
-#                print(item["ID"])
-                print(item["COMMENT"])
-                print(item["FACE"])
+                pass
+#                 print(item["TITLE"])
+#                 print(item["CONTENT"])
+# #                print(item["TIME"])
+# #                print(item["ID"])
+#                 print(item["COMMENT"])
+#                  print(item["FACE"])
             except:
                 pass
