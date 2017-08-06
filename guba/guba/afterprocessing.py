@@ -23,7 +23,7 @@ for stock in STOCKS_LIST:
 	comments_charactor_count = 0
 	faces_count = 0       
 	for item in items:
-		print(item)
+		#print(item)
 		raw_querry = {"ID":item["ID"], "TITLE":item["TITLE"], "TIME":item["TIME"],  
 			         "WRITER":item["WRITER"]}
 		show_raw = col_raw.find(raw_querry, {"_id":0, "READ":1, "COMMENT":1})
@@ -68,8 +68,7 @@ for stock in STOCKS_LIST:
 		doc = {"ID":item["ID"], "POST_ADD": post_add, "READ_ADD":read_add, "COMMENT_ADD":comment_add, 
 				"CONTENT_C":content_charactor_count, "COMMENTS_C":comments_charactor_count, 
 				"FACE_C":faces_count}
-
-		col_output.insert_one(doc)
+	col_output.insert_one(doc)
 
 
 
