@@ -24,7 +24,7 @@ for stock in STOCKS_LIST:
 	faces_count = 0       
 	for item in items:
 		print(item)
-		raw_querry = {"ID":item["ID"], "TITLE":item["TITLE"], "TIME":item["TIME"], \ 
+		raw_querry = {"ID":item["ID"], "TITLE":item["TITLE"], "TIME":item["TIME"],  
 			         "WRITER":item["WRITER"]}
 		show_raw = col_raw.find(raw_querry, {"_id":0, "READ":1, "COMMENT":1})
 
