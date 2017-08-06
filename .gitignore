@@ -1,5 +1,4 @@
 *.pyc
-*.cfg
 guba/output.log
 guba/log
 guba/guba/__pycache__/pipelines.cpython-36.pyc
