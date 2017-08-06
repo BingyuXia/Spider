@@ -21,10 +21,11 @@ for stock in STOCKS_LIST:
 	comment_add = 0
 	content_charactor_count = 0
 	comments_charactor_count = 0
-	faces_count = 0
+	faces_count = 0       
 	for item in items:
-		raw_querry = {"ID":item["ID"], "TITLE":item["TITLE"], "TIME":item["TIME"], 
-			"WRITER":item["WRITER"]}
+	        print(item)
+		raw_querry = {"ID":item["ID"], "TITLE":item["TITLE"], "TIME":item["TIME"], \ 
+			         "WRITER":item["WRITER"]}
 		show_raw = col_raw.find(raw_querry, {"_id":0, "READ":1, "COMMENT":1})
 
 		if show_raw.count() == 0:
@@ -38,7 +39,7 @@ for stock in STOCKS_LIST:
 			post = list(show_raw)[0]
 			read_old = post["READ"]
 			comment_old = post["COMMENT"]
-			col_raw.update_one({raw_querry}, {'$set' : {"READ" : item["READ"], "COMMENT": item["COMMENT"]}})
+			col_raw.update_one(raw_querry, {'$set' : {"READ" : item["READ"], "COMMENT": item["COMMENT"]}})
 
 		for i in item["CONTENT"]:
 			content_charactor_count += len(i)
@@ -48,8 +49,8 @@ for stock in STOCKS_LIST:
 		for i in item["FACE"]:
 			faces_count += len(i)
 
-		read_add += int(item["READ"]) - read_old
-		comment_add += int(item["COMMENT"]) - comment_old
+		read_add += int(item["READ"]) - int(read_old)
+		comment_add += int(item["COMMENT"]) - int(comment_old)
 
 		doc = {"ID":item["ID"], "POST_ADD": post_add, "READ_ADD":read_add, "COMMENT_ADD":comment_add, 
 				"CONTENT_C":content_charactor_count, "COMMENTS_C":comments_charactor_count, 
