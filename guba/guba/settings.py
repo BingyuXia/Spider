@@ -100,5 +100,5 @@ MONGODB_COLNAME = "GUBA_TEMP"
 #        }
 
 #LOGGING:
-LOG_FILE = "log"
+LOG_FILE = "output.log"
 LOG_LEVEL = 'WARNING' 

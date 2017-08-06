@@ -32,8 +32,8 @@ class GubaPipeline(object):
                        "COMMENTS": item["COMMENT"],
                        "FACE"    : item["FACE"] 
                         }
-                query = {"ID"    : item["ID"]
-                         "TITLE" : item["TITLE"]
+                query = {"ID"    : item["ID"],
+                         "TITLE" : item["TITLE"],
                          "TIME"  : item["TIME"]
                           }
                 self.col.update_one(query, {'$set' : doc})
